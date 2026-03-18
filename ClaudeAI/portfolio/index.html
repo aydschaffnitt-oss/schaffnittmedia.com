@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Ayden Schaffnitt Media — Videography portfolio featuring sports and business/client work from Kearney, Nebraska." />
+  <title>Ayden Schaffnitt Media</title>
+
+  <!-- Favicon placeholder (swap out for your own) -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎬</text></svg>" />
+
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+  <!-- ======================================================
+       NAVIGATION
+  ====================================================== -->
+  <nav id="nav">
+    <div class="container nav-inner">
+      <a href="#" class="nav-logo">ASM</a>
+
+      <ul id="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#portfolio">Work</a></li>
+        <li><a href="#contact" class="nav-cta">Get in Touch</a></li>
+      </ul>
+
+      <button id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ======================================================
+       HERO
+  ====================================================== -->
+  <section id="hero">
+    <div class="hero-bg"></div>
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-eyebrow">Videographer — Kearney, Nebraska</div>
+        <h1 class="hero-title">
+          <span class="line">Video that</span>
+          <span class="line">makes you <em>feel.</em></span>
+        </h1>
+        <p class="hero-sub">Sports. Brands. Stories. Captured with intention.</p>
+        <div class="hero-actions">
+          <a href="#portfolio" class="btn-primary">View My Work</a>
+          <a href="#about" class="btn-outline">About Me</a>
+        </div>
+      </div>
+    </div>
+    <div class="hero-scroll">
+      <div class="scroll-line"></div>
+      Scroll
+    </div>
+  </section>
+
+  <!-- ======================================================
+       ABOUT
+  ====================================================== -->
+  <section id="about">
+    <div class="container">
+      <div class="about-grid">
+
+        <div class="reveal">
+          <p class="section-label">About</p>
+          <h2 class="section-heading">The person<br/>behind the lens</h2>
+        </div>
+
+        <div class="reveal" style="transition-delay:0.1s">
+          <p class="about-body">
+            Hi! I am Ayden Schaffnitt, an aspiring videographer from Kearney, Nebraska.
+            I love creating videos with intention — videos that make the viewer feel a certain
+            emotion. I find pure joy in watching others view my projects.
+          </p>
+
+          <div class="about-stats">
+            <div class="stat-item">
+              <div class="stat-number">2</div>
+              <div class="stat-label">Niches</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number">∞</div>
+              <div class="stat-label">Stories to Tell</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number">NE</div>
+              <div class="stat-label">Based In</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number">100%</div>
+              <div class="stat-label">Passion-Driven</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================
+       PORTFOLIO
+  ====================================================== -->
+  <section id="portfolio">
+    <div class="container">
+
+      <div class="portfolio-header reveal">
+        <div>
+          <p class="section-label">Portfolio</p>
+          <h2 class="section-heading">Selected Work</h2>
+        </div>
+
+        <div class="filter-tabs">
+          <button class="filter-btn active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="sports">Sports</button>
+          <button class="filter-btn" data-filter="business">Business</button>
+        </div>
+      </div>
+
+      <div id="video-grid"></div>
+
+    </div>
+  </section>
+
+  <!-- ======================================================
+       CONTACT
+  ====================================================== -->
+  <section id="contact">
+    <div class="container">
+      <div class="contact-inner reveal">
+        <p class="section-label">Contact</p>
+        <h2 class="section-heading">Let's make something great.</h2>
+        <p class="contact-sub">
+          Have a project in mind? Whether it's a game-day highlight reel or a brand
+          story for your business — I'd love to hear about it.
+        </p>
+        <!--
+          Replace the email address below with your real email.
+          You can also link to an Instagram or a contact form if you prefer.
+        -->
+        <a href="mailto:your@email.com" class="contact-email">
+          your@email.com
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================
+       FOOTER
+  ====================================================== -->
+  <footer>
+    <div class="container footer-inner">
+      <span class="footer-logo">Ayden Schaffnitt Media</span>
+      <span class="footer-copy">&copy; <span id="year"></span> All rights reserved.</span>
+    </div>
+  </footer>
+
+  <!-- ======================================================
+       VIDEO MODAL
+  ====================================================== -->
+  <div id="video-modal" role="dialog" aria-modal="true" aria-label="Video player">
+    <div class="modal-inner">
+      <p id="modal-title"></p>
+      <div class="modal-video-wrap">
+        <iframe
+          id="modal-iframe"
+          src=""
+          allow="autoplay; fullscreen; picture-in-picture"
+          allowfullscreen
+        ></iframe>
+        <button id="modal-close" aria-label="Close video">
+          <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1 1L13 13M13 1L1 13" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+  <script src="js/videos.js"></script>
+  <script src="js/main.js"></script>
+
+</body>
+</html>

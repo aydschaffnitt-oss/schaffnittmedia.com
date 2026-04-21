@@ -7,6 +7,22 @@
 //  2. Copy the video ID from the URL
 //     e.g. youtube.com/watch?v=dQw4w9WgXcQ  →  ID is "dQw4w9WgXcQ"
 //  3. Add a new object to the VIDEOS array below, following the same format
+
+// ============================================================
+//  HERO BACKGROUND VIDEOS
+//  These cycle in the background of the hero section (muted).
+//  Add your best/most cinematic YouTube video IDs here.
+//  Tip: short clips or highlight reels work best as backgrounds.
+// ============================================================
+
+const HERO_VIDEOS = [
+  "dQw4w9WgXcQ",   // Replace with your YouTube video ID
+  "dQw4w9WgXcQ",   // Replace with your YouTube video ID
+  "dQw4w9WgXcQ",   // Replace with your YouTube video ID
+];
+
+// How many seconds each video plays before switching (default: 8)
+const HERO_INTERVAL = 8;
 //
 //  CATEGORIES: "sports" or "business"
 //

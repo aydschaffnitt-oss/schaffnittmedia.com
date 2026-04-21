@@ -1,0 +1,11 @@
+# macOS metadata
+.DS_Store
+
+# Ignore everything by default
+/*
+!/.gitignore
+!/ClaudeAI/
+
+# Inside ClaudeAI, ignore everything except portfolio
+/ClaudeAI/*
+!/ClaudeAI/portfolio/

@@ -15,10 +15,14 @@
 //  Tip: short clips or highlight reels work best as backgrounds.
 // ============================================================
 
+// ============================================================
+//  HERO BACKGROUND VIDEOS
+//  Add your encoded MP4 clips to the /videos/ folder, then
+//  list the filenames here. They will cycle automatically.
+//  e.g. "videos/my-clip.mp4"
+// ============================================================
 const HERO_VIDEOS = [
-  "f_v63UmqYis",   // Nebraska Basketball Hype Video
-  "IncmXQTd6Ps",   // KVFD Volunteer Advertisement
-  "8D35nULokaA",   // Hub Fitness Promo Video
+  "videos/clip1.mp4",   // Replace with your actual filename
 ];
 
 // How many seconds each video plays before switching (default: 8)

@@ -136,37 +136,38 @@ const revealObserver = new IntersectionObserver(
 document.querySelectorAll(".reveal").forEach((el) => revealObserver.observe(el));
 
 // ---------- Hero Background Video Cycling ----------
-function buildHeroBgURL(videoId) {
-  return `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&mute=1&controls=0&loop=1&playlist=${videoId}&rel=0&showinfo=0&iv_load_policy=3&modestbranding=1&playsinline=1&disablekb=1&fs=0&cc_load_policy=0`;
-}
-
 function initHeroVideos() {
   if (!HERO_VIDEOS || HERO_VIDEOS.length === 0) return;
 
-  const slides  = [document.getElementById("hero-slide-0"), document.getElementById("hero-slide-1")];
-  const iframes = [document.getElementById("hero-iframe-0"), document.getElementById("hero-iframe-1")];
+  const slides = [document.getElementById("hero-slide-0"), document.getElementById("hero-slide-1")];
+  const videos = [document.getElementById("hero-video-0"), document.getElementById("hero-video-1")];
 
   let current = 0;
   let next    = 1;
   let index   = 0;
 
-  // Load first video into slot 0
-  iframes[0].src = buildHeroBgURL(HERO_VIDEOS[0]);
+  // Load and play first clip
+  videos[0].src = HERO_VIDEOS[0];
+  videos[0].play().catch(() => {});
   slides[0].classList.add("active");
 
-  if (HERO_VIDEOS.length === 1) return; // No cycling needed for a single video
+  // If only one clip, just loop it
+  if (HERO_VIDEOS.length === 1) {
+    videos[0].loop = true;
+    return;
+  }
 
   setInterval(() => {
     index = (index + 1) % HERO_VIDEOS.length;
 
-    // Pre-load next video into the hidden slot
-    iframes[next].src = buildHeroBgURL(HERO_VIDEOS[index]);
+    // Load next clip into the hidden slot and start playing
+    videos[next].src = HERO_VIDEOS[index];
+    videos[next].play().catch(() => {});
 
     // Crossfade
     slides[next].classList.add("active");
     slides[current].classList.remove("active");
 
-    // Swap slots
     [current, next] = [next, current];
   }, (HERO_INTERVAL || 8) * 1000);
 }

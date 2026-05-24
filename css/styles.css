@@ -730,9 +730,10 @@ footer {
 
   #hamburger { display: flex; }
 
-  /* Hide video background on mobile — saves data and avoids iOS autoplay issues */
-  .hero-video-bg,
-  .hero-video-overlay { display: none; }
+  /* Slightly darker overlay on mobile since portrait crop shows less of the frame */
+  .hero-video-overlay {
+    background: rgba(10,10,10,0.50);
+  }
 
   .about-grid {
     grid-template-columns: 1fr;

@@ -136,8 +136,8 @@ const revealObserver = new IntersectionObserver(
 document.querySelectorAll(".reveal").forEach((el) => revealObserver.observe(el));
 
 // ---------- Hero Background Video Cycling ----------
-function initHeroVideos() {
-  if (!HERO_VIDEOS || HERO_VIDEOS.length === 0) return;
+function initHeroVideos(clips) {
+  if (!clips || clips.length === 0) return;
 
   const slides = [document.getElementById("hero-slide-0"), document.getElementById("hero-slide-1")];
   const videos = [document.getElementById("hero-video-0"), document.getElementById("hero-video-1")];
@@ -149,13 +149,13 @@ function initHeroVideos() {
   // Buffer a clip into a slot without playing it
   function preloadSlot(slot, idx) {
     const v = videos[slot];
-    v.src = HERO_VIDEOS[idx];
+    v.src = clips[idx];
     v.load();
   }
 
   function advance() {
     const nextSlot      = 1 - currentSlot;
-    const nextClipIndex = (clipIndex + 1) % HERO_VIDEOS.length;
+    const nextClipIndex = (clipIndex + 1) % clips.length;
 
     // Always start the next clip from the very beginning
     videos[nextSlot].currentTime = 0;
@@ -182,17 +182,17 @@ function initHeroVideos() {
       videos[prevSlot].load(); // release memory
 
       // Now safe to preload the next-next clip into the idle slot
-      preloadSlot(prevSlot, (clipIndex + 1) % HERO_VIDEOS.length);
+      preloadSlot(prevSlot, (clipIndex + 1) % clips.length);
     }, FADE_MS);
   }
 
   // Load and play first clip
-  videos[0].src = HERO_VIDEOS[0];
+  videos[0].src = clips[0];
   videos[0].currentTime = 0;
   videos[0].play().catch(() => {});
   slides[0].classList.add("active");
 
-  if (HERO_VIDEOS.length === 1) {
+  if (clips.length === 1) {
     videos[0].loop = true;
     return;
   }
@@ -201,13 +201,16 @@ function initHeroVideos() {
   videos[0].addEventListener("ended", advance, { once: true });
 
   // Immediately preload the second clip so it's ready
-  preloadSlot(1, 1 % HERO_VIDEOS.length);
+  preloadSlot(1, 1 % clips.length);
 }
 
 // ---------- Init ----------
 renderVideos();
 
-// Only run video background on desktop — skip on mobile to save data
-if (window.innerWidth > 768) {
-  initHeroVideos();
-}
+// On mobile, use only 3 random clips to save data (already shuffled)
+// On desktop, use the full list
+const heroClips = window.innerWidth <= 768
+  ? HERO_VIDEOS.slice(0, 3)
+  : HERO_VIDEOS;
+
+initHeroVideos(heroClips);

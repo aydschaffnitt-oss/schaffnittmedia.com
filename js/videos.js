@@ -23,19 +23,19 @@
 // ============================================================
 const HERO_VIDEOS = (function () {
   const clips = [
-    "videos/webreel2_2.mp4",
-    "videos/webreel2_2_1_1.mp4",
-    "videos/webreel2_2_10_1.mp4",
-    "videos/webreel2_2_2.mp4",
-    "videos/webreel2_2_3.mp4",
-    "videos/webreel2_2_4.mp4",
-    "videos/webreel2_2_5_1.mp4",
-    "videos/webreel2_2_6_1.mp4",
-    "videos/webreel2_2_7.mp4",
-    "videos/webreel2_2_9_1.mp4",
-    "videos/webreelFIX2_2_8_1.mp4",
-    "videos/webreel_12.mp4",
-    "videos/webreel_13_1.mp4",
+    "videos/bg01.mp4",
+    "videos/bg02.mp4",
+    "videos/bg03.mp4",
+    "videos/bg04.mp4",
+    "videos/bg05.mp4",
+    "videos/bg06.mp4",
+    "videos/bg07.mp4",
+    "videos/bg08.mp4",
+    "videos/bg09.mp4",
+    "videos/bg10.mp4",
+    "videos/bg11.mp4",
+    "videos/bg12.mp4",
+    // Add new clips below — name them bg13.mp4, bg14.mp4, etc.
   ];
   // Shuffle using Fisher-Yates so order is different every visit
   for (let i = clips.length - 1; i > 0; i--) {

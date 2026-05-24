@@ -144,38 +144,51 @@ function initHeroVideos() {
 
   let currentSlot = 0;
   let clipIndex   = 0;
+  const FADE_MS   = 1200; // must match CSS transition duration
 
-  // Preload a clip into a slot without playing it
-  function preload(slot, idx) {
-    videos[slot].src = HERO_VIDEOS[idx];
-    videos[slot].load();
+  // Buffer a clip into a slot without playing it
+  function preloadSlot(slot, idx) {
+    const v = videos[slot];
+    v.src = HERO_VIDEOS[idx];
+    v.load();
   }
 
-  // Called when the current clip ends — crossfade to the preloaded next clip
   function advance() {
     const nextSlot      = 1 - currentSlot;
     const nextClipIndex = (clipIndex + 1) % HERO_VIDEOS.length;
 
-    // Next clip is already buffered — just play it
+    // Always start the next clip from the very beginning
+    videos[nextSlot].currentTime = 0;
     videos[nextSlot].play().catch(() => {});
 
     // Crossfade
     slides[nextSlot].classList.add("active");
     slides[currentSlot].classList.remove("active");
 
+    const prevSlot = currentSlot;
+
     // Update state
     currentSlot = nextSlot;
     clipIndex   = nextClipIndex;
 
-    // Listen for end of this clip
+    // Listen for end of the now-playing clip
     videos[currentSlot].addEventListener("ended", advance, { once: true });
 
-    // Start preloading the clip after this one into the idle slot
-    preload(1 - currentSlot, (clipIndex + 1) % HERO_VIDEOS.length);
+    // Wait for the fade to fully complete before touching the old slot —
+    // this prevents any flash or ghost frame during the transition
+    setTimeout(() => {
+      videos[prevSlot].pause();
+      videos[prevSlot].removeAttribute("src");
+      videos[prevSlot].load(); // release memory
+
+      // Now safe to preload the next-next clip into the idle slot
+      preloadSlot(prevSlot, (clipIndex + 1) % HERO_VIDEOS.length);
+    }, FADE_MS);
   }
 
   // Load and play first clip
   videos[0].src = HERO_VIDEOS[0];
+  videos[0].currentTime = 0;
   videos[0].play().catch(() => {});
   slides[0].classList.add("active");
 
@@ -187,8 +200,8 @@ function initHeroVideos() {
   // Listen for end of first clip
   videos[0].addEventListener("ended", advance, { once: true });
 
-  // Preload second clip immediately so it's ready when first ends
-  preload(1, 1 % HERO_VIDEOS.length);
+  // Immediately preload the second clip so it's ready
+  preloadSlot(1, 1 % HERO_VIDEOS.length);
 }
 
 // ---------- Init ----------

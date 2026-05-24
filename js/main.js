@@ -275,7 +275,7 @@ function initHeroVideos(clips) {
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
 
-  const COUNT  = 58;
+  const COUNT  = 80;
   const R = 212, G = 197, B = 169; // warm cream
 
   function resize() {
@@ -286,14 +286,14 @@ function initHeroVideos(clips) {
   window.addEventListener('resize', resize, { passive: true });
 
   function mkParticle() {
-    const size = 1.2 + Math.random() * 2;
+    const size = 2 + Math.random() * 3;
     return {
       x:     Math.random() * canvas.width,
       y:     Math.random() * canvas.height,
       size,
       vx:    (Math.random() - 0.5) * 0.22,
       vy:    (Math.random() - 0.5) * 0.22,
-      alpha: 0.04 + Math.random() * 0.07,
+      alpha: 0.10 + Math.random() * 0.14,
       angle: Math.random() * Math.PI * 2,
       spin:  (Math.random() - 0.5) * 0.006,
     };

@@ -39,7 +39,7 @@ filterBtns.forEach((btn) => {
 
 // ---------- Render Video Grid ----------
 function getYouTubeThumbnail(id) {
-  return `https://img.youtube.com/vi/${id}/maxresdefault.jpg`;
+  return `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
 }
 
 function renderVideos() {
@@ -66,7 +66,7 @@ function renderVideos() {
           src="${getYouTubeThumbnail(video.id)}"
           alt="${video.title}"
           loading="lazy"
-          onerror="this.src='https://img.youtube.com/vi/${video.id}/hqdefault.jpg'"
+          onerror="this.dataset.fallback=(this.dataset.fallback||'mqdefault'); this.src='https://img.youtube.com/vi/${video.id}/'+(this.dataset.fallback==='mqdefault'?'mqdefault':'default')+'.jpg'"
         />
         <div class="play-icon">
           <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

@@ -174,7 +174,7 @@ section { padding: 100px 0; }
 .hero-video-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(10,10,10,0.45);
+  background: rgba(10,10,10,0.35);
   z-index: 2;
   pointer-events: none;
 }
@@ -729,6 +729,10 @@ footer {
   }
 
   #hamburger { display: flex; }
+
+  /* Hide video background on mobile — saves data and avoids iOS autoplay issues */
+  .hero-video-bg,
+  .hero-video-overlay { display: none; }
 
   .about-grid {
     grid-template-columns: 1fr;

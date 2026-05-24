@@ -206,4 +206,8 @@ function initHeroVideos() {
 
 // ---------- Init ----------
 renderVideos();
-initHeroVideos();
+
+// Only run video background on desktop — skip on mobile to save data
+if (window.innerWidth > 768) {
+  initHeroVideos();
+}

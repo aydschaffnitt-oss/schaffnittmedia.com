@@ -22,29 +22,28 @@
 //  Note: keep files under 100MB (GitHub's hard limit)
 // ============================================================
 const HERO_VIDEOS = (function () {
-  const clips = [
+  // bg06 always plays first — remaining clips shuffle randomly each visit
+  const rest = [
     "videos/bg01.mp4",
     "videos/bg02.mp4",
     "videos/bg03.mp4",
     "videos/bg04.mp4",
     "videos/bg05.mp4",
-    "videos/bg06.mp4",
-    "videos/bg06.mp4",
     "videos/bg07.mp4",
     "videos/bg08.mp4",
     "videos/bg09.mp4",
     "videos/bg10.mp4",
     "videos/bg11.mp4",
-    "videos/bg11.mp4",
+    "videos/bg11.mp4", // weighted — plays more often
     "videos/bg12.mp4",
     // Add new clips below — name them bg13.mp4, bg14.mp4, etc.
   ];
-  // Shuffle using Fisher-Yates so order is different every visit
-  for (let i = clips.length - 1; i > 0; i--) {
+  // Shuffle the rest using Fisher-Yates
+  for (let i = rest.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-    [clips[i], clips[j]] = [clips[j], clips[i]];
+    [rest[i], rest[j]] = [rest[j], rest[i]];
   }
-  return clips;
+  return ["videos/bg06.mp4", ...rest];
 })();
 
 // How many seconds each video plays before switching (default: 8)

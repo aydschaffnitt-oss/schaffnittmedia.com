@@ -249,6 +249,40 @@ if (scrollProgressEl) {
   }, { passive: true });
 }
 
+// ---------- Stat Counter Animation ----------
+(function () {
+  const statsEl = document.querySelector('.about-stats');
+  if (!statsEl) return;
+
+  let triggered = false;
+
+  function countUp(el, target, suffix, duration) {
+    const start = performance.now();
+    function tick(now) {
+      const t = Math.min((now - start) / duration, 1);
+      // easeOutExpo
+      const eased = t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
+      el.textContent = Math.round(eased * target) + suffix;
+      if (t < 1) requestAnimationFrame(tick);
+      else el.textContent = target + suffix;
+    }
+    requestAnimationFrame(tick);
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    if (!entries[0].isIntersecting || triggered) return;
+    triggered = true;
+    statsEl.querySelectorAll('.stat-number[data-count]').forEach(el => {
+      const target = parseInt(el.dataset.count, 10);
+      const suffix = el.dataset.suffix || '';
+      countUp(el, target, suffix, 1400);
+    });
+    observer.disconnect();
+  }, { threshold: 0.35 });
+
+  observer.observe(statsEl);
+})();
+
 // ---------- Init ----------
 animateHero();
 renderVideos();

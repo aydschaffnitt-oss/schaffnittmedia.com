@@ -137,7 +137,7 @@ document.querySelectorAll(".reveal").forEach((el) => revealObserver.observe(el))
 
 // ---------- Hero Background Video Cycling ----------
 function buildHeroBgURL(videoId) {
-  return `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&controls=0&loop=1&playlist=${videoId}&rel=0&showinfo=0&iv_load_policy=3&modestbranding=1&playsinline=1`;
+  return `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&controls=0&loop=1&playlist=${videoId}&rel=0&showinfo=0&iv_load_policy=3&modestbranding=1&playsinline=1&disablekb=1&fs=0&cc_load_policy=0`;
 }
 
 function initHeroVideos() {

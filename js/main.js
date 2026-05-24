@@ -239,6 +239,54 @@ function initHeroVideos(clips) {
   preloadSlot(1, 1 % clips.length);
 }
 
+// ---------- Scroll Progress ----------
+const scrollProgressEl = document.querySelector('.scroll-progress');
+if (scrollProgressEl) {
+  window.addEventListener('scroll', () => {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    scrollProgressEl.style.width = (docHeight > 0 ? (scrollTop / docHeight) * 100 : 0) + '%';
+  }, { passive: true });
+}
+
+// ---------- Custom Cursor ----------
+(function () {
+  // Only run on devices with a fine pointer (desktop mouse)
+  if (!window.matchMedia('(pointer: fine)').matches) return;
+
+  const dot = document.querySelector('.cursor-dot');
+  if (!dot) return;
+
+  let mx = 0, my = 0;  // raw mouse position
+  let dx = 0, dy = 0;  // smoothed dot position
+
+  document.addEventListener('mousemove', (e) => {
+    mx = e.clientX;
+    my = e.clientY;
+    dot.classList.add('visible');
+  }, { passive: true });
+
+  document.addEventListener('mouseleave', () => dot.classList.remove('visible'));
+
+  // Smooth follow loop
+  (function loop() {
+    dx += (mx - dx) * 0.15;
+    dy += (my - dy) * 0.15;
+    dot.style.left = dx + 'px';
+    dot.style.top  = dy + 'px';
+    requestAnimationFrame(loop);
+  })();
+
+  // Morph to circle outline on video card hover
+  document.addEventListener('mouseover', (e) => {
+    if (e.target.closest('.card-thumb')) {
+      dot.classList.add('play-mode');
+    } else {
+      dot.classList.remove('play-mode');
+    }
+  });
+})();
+
 // ---------- Init ----------
 animateHero();
 renderVideos();

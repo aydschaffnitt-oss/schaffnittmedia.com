@@ -17,6 +17,60 @@
   --transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* ---------- Scroll Progress ---------- */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  width: 0%;
+  background: var(--accent);
+  z-index: 10001;
+  pointer-events: none;
+  transition: width 0.08s linear;
+}
+
+/* ---------- Custom Cursor (fine pointer / desktop only) ---------- */
+@media (pointer: fine) {
+  body,
+  a,
+  button,
+  .card-thumb,
+  [role="button"],
+  .filter-btn {
+    cursor: none;
+  }
+
+  .cursor-dot {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 8px;
+    height: 8px;
+    background: var(--accent);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 99998;
+    transform: translate(-50%, -50%);
+    transition: width 0.25s cubic-bezier(0.16,1,0.3,1),
+                height 0.25s cubic-bezier(0.16,1,0.3,1),
+                background 0.25s,
+                border 0.25s,
+                opacity 0.3s;
+    opacity: 0;
+    will-change: left, top;
+  }
+
+  .cursor-dot.visible { opacity: 1; }
+
+  .cursor-dot.play-mode {
+    width: 52px;
+    height: 52px;
+    background: transparent;
+    border: 1.5px solid rgba(212, 197, 169, 0.55);
+  }
+}
+
 /* ---------- Film Grain ---------- */
 .grain-overlay {
   position: fixed;
@@ -100,6 +154,43 @@ section { padding: 100px 0; }
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--accent);
+}
+
+/* ---------- Nav Status ---------- */
+.nav-status {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  user-select: none;
+}
+
+.status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #4ade80;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.status-dot::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  background: rgba(74, 222, 128, 0.22);
+  animation: pulse-ring 2.6s ease-out infinite;
+}
+
+@keyframes pulse-ring {
+  0%   { transform: scale(0.75); opacity: 0.9; }
+  70%  { transform: scale(1.9);  opacity: 0;   }
+  100% { transform: scale(0.75); opacity: 0;   }
 }
 
 #nav-links {
@@ -832,6 +923,23 @@ footer {
   color: var(--muted);
 }
 
+/* ---------- Footer Social ---------- */
+.footer-social {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  transition: color var(--transition);
+}
+
+.footer-social:hover { color: var(--accent); }
+
+.footer-social svg { flex-shrink: 0; }
+
 /* ---------- Scroll Reveal ---------- */
 .reveal {
   opacity: 0;
@@ -877,6 +985,8 @@ footer {
   }
 
   #hamburger { display: flex; }
+
+  .nav-status { display: none; }
 
   /* Slightly darker overlay on mobile since portrait crop shows less of the frame */
   .hero-video-overlay {

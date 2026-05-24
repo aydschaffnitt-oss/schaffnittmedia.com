@@ -34,7 +34,6 @@ const HERO_VIDEOS = (function () {
     "videos/bg09.mp4",
     "videos/bg10.mp4",
     "videos/bg11.mp4",
-    "videos/bg11.mp4", // weighted — plays more often
     "videos/bg12.mp4",
     // Add new clips below — name them bg13.mp4, bg14.mp4, etc.
   ];

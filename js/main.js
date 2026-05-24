@@ -284,22 +284,34 @@ function initHeroVideos(clips) {
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
 
-  const COUNT  = 80;
+  // ~60 particles per viewport-height of content so density stays
+  // consistent no matter how far the user scrolls.
+  const BASE_PER_VH = 60;
+  const MAX_PARTICLES = 400;
   const R = 212, G = 197, B = 169; // warm cream
 
-  function resize() {
+  let particles = [];
+  let docH = 1;
+
+  function getDocH() {
+    return Math.max(
+      document.body.scrollHeight,
+      document.documentElement.scrollHeight,
+      window.innerHeight
+    );
+  }
+
+  // Canvas stays viewport-sized — only draw what's visible each frame
+  function resizeCanvas() {
     canvas.width  = window.innerWidth;
     canvas.height = window.innerHeight;
   }
-  resize();
-  window.addEventListener('resize', resize, { passive: true });
 
   function mkParticle() {
-    const size = 2 + Math.random() * 3;
     return {
-      x:     Math.random() * canvas.width,
-      y:     Math.random() * canvas.height,
-      size,
+      x:     Math.random() * window.innerWidth,
+      wy:    Math.random() * docH,   // world-space Y (document coords)
+      size:  2 + Math.random() * 3,
       vx:    (Math.random() - 0.5) * 0.22,
       vy:    (Math.random() - 0.5) * 0.22,
       alpha: 0.10 + Math.random() * 0.14,
@@ -308,25 +320,50 @@ function initHeroVideos(clips) {
     };
   }
 
-  const particles = Array.from({ length: COUNT }, mkParticle);
+  function init() {
+    resizeCanvas();
+    docH = getDocH();
+    const count = Math.min(
+      Math.round(BASE_PER_VH * docH / window.innerHeight),
+      MAX_PARTICLES
+    );
+    particles = Array.from({ length: count }, mkParticle);
+  }
+
+  init();
+
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(init, 200);
+  }, { passive: true });
 
   function tick() {
+    const scrollY = window.scrollY;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     for (const p of particles) {
-      p.x += p.vx;
-      p.y += p.vy;
+      p.x  += p.vx;
+      p.wy += p.vy;
       p.angle += p.spin;
 
-      // Wrap around viewport edges
-      if (p.x < -5)               p.x = canvas.width  + 5;
-      if (p.x > canvas.width  + 5) p.x = -5;
-      if (p.y < -5)               p.y = canvas.height + 5;
-      if (p.y > canvas.height + 5) p.y = -5;
+      // Wrap horizontally in screen space
+      if (p.x < -5)                p.x = canvas.width + 5;
+      if (p.x > canvas.width + 5)  p.x = -5;
+
+      // Wrap vertically in world space (document height)
+      if (p.wy < 0)    p.wy = docH;
+      if (p.wy > docH) p.wy = 0;
+
+      // Convert world-Y → screen-Y by subtracting scroll offset
+      const sy = p.wy - scrollY;
+
+      // Skip particles outside the visible viewport (free performance win)
+      if (sy < -5 || sy > canvas.height + 5) continue;
 
       ctx.save();
       ctx.globalAlpha = p.alpha;
-      ctx.translate(p.x, p.y);
+      ctx.translate(p.x, sy);
       ctx.rotate(p.angle);
       ctx.fillStyle = `rgb(${R},${G},${B})`;
       ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);

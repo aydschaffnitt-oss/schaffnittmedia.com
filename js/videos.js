@@ -7,6 +7,22 @@
 //  2. Copy the video ID from the URL
 //     e.g. youtube.com/watch?v=dQw4w9WgXcQ  →  ID is "dQw4w9WgXcQ"
 //  3. Add a new object to the VIDEOS array below, following the same format
+
+// ============================================================
+//  HERO BACKGROUND VIDEOS
+//  These cycle in the background of the hero section (muted).
+//  Add your best/most cinematic YouTube video IDs here.
+//  Tip: short clips or highlight reels work best as backgrounds.
+// ============================================================
+
+const HERO_VIDEOS = [
+  "f_v63UmqYis",   // Nebraska Basketball Hype Video
+  "IncmXQTd6Ps",   // KVFD Volunteer Advertisement
+  "8D35nULokaA",   // Hub Fitness Promo Video
+];
+
+// How many seconds each video plays before switching (default: 8)
+const HERO_INTERVAL = 8;
 //
 //  CATEGORIES: "sports" or "business"
 //
@@ -15,41 +31,29 @@
 const VIDEOS = [
   // --- SPORTS ---
   {
-    id: "dQw4w9WgXcQ",          // Replace with your YouTube video ID
-    title: "Game Day Highlights",
-    description: "High-energy sports recap with dynamic cuts and sound design.",
-    category: "sports",
-  },
-  {
-    id: "dQw4w9WgXcQ",          // Replace with your YouTube video ID
-    title: "Athlete Feature",
-    description: "A cinematic profile following a local athlete through their season.",
-    category: "sports",
-  },
-  {
-    id: "dQw4w9WgXcQ",          // Replace with your YouTube video ID
-    title: "Tournament Recap",
-    description: "Full-weekend coverage condensed into a punchy two-minute edit.",
+    id: "f_v63UmqYis",
+    title: "Nebraska Basketball Hype Video",
+    description: "Hype video edited by me that played in-venue at Pinnacle Bank Arena during the 25-26 season.",
     category: "sports",
   },
 
   // --- BUSINESS / CLIENTS ---
   {
-    id: "dQw4w9WgXcQ",          // Replace with your YouTube video ID
-    title: "Brand Story — Local Business",
-    description: "A short documentary-style brand film for a local Kearney business.",
+    id: "IncmXQTd6Ps",
+    title: "KVFD Volunteer Advertisement",
+    description: "Short video produced for the Kearney Volunteer Fire Department to bolster local volunteer recruitment.",
     category: "business",
   },
   {
-    id: "dQw4w9WgXcQ",          // Replace with your YouTube video ID
-    title: "Product Showcase",
-    description: "Clean, minimal product video with motion graphics.",
+    id: "8D35nULokaA",
+    title: "Hub Fitness Promo Video",
+    description: "Short video produced for Hub Fitness to support their grand opening.",
     category: "business",
   },
   {
-    id: "dQw4w9WgXcQ",          // Replace with your YouTube video ID
-    title: "Event Coverage",
-    description: "Full-day event captured and cut into a polished highlight reel.",
+    id: "G1gkw-7Stx8",
+    title: "Sissy Squat Reel",
+    description: "Short reel showcasing new piece of equipment for Hub Fitness.",
     category: "business",
   },
 ];

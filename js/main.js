@@ -284,10 +284,8 @@ function initHeroVideos(clips) {
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
 
-  // ~60 particles per viewport-height of content so density stays
-  // consistent no matter how far the user scrolls.
-  const BASE_PER_VH = 60;
-  const MAX_PARTICLES = 400;
+  const BASE_PER_VH = 35;      // particles per viewport-height of content
+  const MAX_PARTICLES = 250;
   const R = 212, G = 197, B = 169; // warm cream
 
   let particles = [];
@@ -311,10 +309,10 @@ function initHeroVideos(clips) {
     return {
       x:     Math.random() * window.innerWidth,
       wy:    Math.random() * docH,   // world-space Y (document coords)
-      size:  2 + Math.random() * 3,
-      vx:    (Math.random() - 0.5) * 0.22,
-      vy:    (Math.random() - 0.5) * 0.22,
-      alpha: 0.10 + Math.random() * 0.14,
+      size:  1 + Math.random() * 1.8,
+      vx:    (Math.random() - 0.5) * 0.18,
+      vy:    (Math.random() - 0.5) * 0.18,
+      alpha: 0.06 + Math.random() * 0.09,
       angle: Math.random() * Math.PI * 2,
       spin:  (Math.random() - 0.5) * 0.006,
     };

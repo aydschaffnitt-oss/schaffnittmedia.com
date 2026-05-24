@@ -142,34 +142,53 @@ function initHeroVideos() {
   const slides = [document.getElementById("hero-slide-0"), document.getElementById("hero-slide-1")];
   const videos = [document.getElementById("hero-video-0"), document.getElementById("hero-video-1")];
 
-  let current = 0;
-  let next    = 1;
-  let index   = 0;
+  let currentSlot = 0;
+  let clipIndex   = 0;
+
+  // Preload a clip into a slot without playing it
+  function preload(slot, idx) {
+    videos[slot].src = HERO_VIDEOS[idx];
+    videos[slot].load();
+  }
+
+  // Called when the current clip ends — crossfade to the preloaded next clip
+  function advance() {
+    const nextSlot      = 1 - currentSlot;
+    const nextClipIndex = (clipIndex + 1) % HERO_VIDEOS.length;
+
+    // Next clip is already buffered — just play it
+    videos[nextSlot].play().catch(() => {});
+
+    // Crossfade
+    slides[nextSlot].classList.add("active");
+    slides[currentSlot].classList.remove("active");
+
+    // Update state
+    currentSlot = nextSlot;
+    clipIndex   = nextClipIndex;
+
+    // Listen for end of this clip
+    videos[currentSlot].addEventListener("ended", advance, { once: true });
+
+    // Start preloading the clip after this one into the idle slot
+    preload(1 - currentSlot, (clipIndex + 1) % HERO_VIDEOS.length);
+  }
 
   // Load and play first clip
   videos[0].src = HERO_VIDEOS[0];
   videos[0].play().catch(() => {});
   slides[0].classList.add("active");
 
-  // If only one clip, just loop it
   if (HERO_VIDEOS.length === 1) {
     videos[0].loop = true;
     return;
   }
 
-  setInterval(() => {
-    index = (index + 1) % HERO_VIDEOS.length;
+  // Listen for end of first clip
+  videos[0].addEventListener("ended", advance, { once: true });
 
-    // Load next clip into the hidden slot and start playing
-    videos[next].src = HERO_VIDEOS[index];
-    videos[next].play().catch(() => {});
-
-    // Crossfade
-    slides[next].classList.add("active");
-    slides[current].classList.remove("active");
-
-    [current, next] = [next, current];
-  }, (HERO_INTERVAL || 8) * 1000);
+  // Preload second clip immediately so it's ready when first ends
+  preload(1, 1 % HERO_VIDEOS.length);
 }
 
 // ---------- Init ----------

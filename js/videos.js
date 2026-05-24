@@ -29,10 +29,12 @@ const HERO_VIDEOS = (function () {
     "videos/bg04.mp4",
     "videos/bg05.mp4",
     "videos/bg06.mp4",
+    "videos/bg06.mp4",
     "videos/bg07.mp4",
     "videos/bg08.mp4",
     "videos/bg09.mp4",
     "videos/bg10.mp4",
+    "videos/bg11.mp4",
     "videos/bg11.mp4",
     "videos/bg12.mp4",
     // Add new clips below — name them bg13.mp4, bg14.mp4, etc.

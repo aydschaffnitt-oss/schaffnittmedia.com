@@ -161,6 +161,14 @@ section { padding: 100px 0; }
   opacity: 1;
 }
 
+/* Transparent div that sits over the iframe to block YouTube's player UI */
+.iframe-blocker {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: transparent;
+}
+
 .hero-video-slide iframe {
   position: absolute;
   /* Oversized to cover the container regardless of aspect ratio */

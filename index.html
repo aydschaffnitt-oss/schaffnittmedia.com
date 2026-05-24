@@ -9,14 +9,17 @@
   <!-- Favicon placeholder (swap out for your own) -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎬</text></svg>" />
 
-  <!-- Google Fonts: Inter -->
+  <!-- Google Fonts: Bebas Neue (display) + Inter (body) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
+
+  <!-- Film grain overlay -->
+  <div class="grain-overlay" aria-hidden="true"></div>
 
   <!-- ======================================================
        NAVIGATION
@@ -58,8 +61,15 @@
       <div class="hero-content">
         <div class="hero-eyebrow">Videographer — Kearney, Nebraska</div>
         <h1 class="hero-title">
-          <span class="line">Video that</span>
-          <span class="line">makes you <em>feel.</em></span>
+          <span class="line">
+            <span class="word"><span class="word-inner">Video</span></span>
+            <span class="word"><span class="word-inner">that</span></span>
+          </span>
+          <span class="line">
+            <span class="word"><span class="word-inner">makes</span></span>
+            <span class="word"><span class="word-inner">you</span></span>
+            <span class="word accent-word"><span class="word-inner">feel.</span></span>
+          </span>
         </h1>
         <p class="hero-sub">Sports. Brands. Stories. Captured with intention.</p>
         <div class="hero-actions">
@@ -75,6 +85,30 @@
   </section>
 
   <!-- ======================================================
+       MARQUEE
+  ====================================================== -->
+  <div class="marquee-section" aria-hidden="true">
+    <div class="marquee-track">
+      <div class="marquee-content">
+        <span>Sports</span><span class="marquee-dot">·</span>
+        <span>Brands</span><span class="marquee-dot">·</span>
+        <span>Stories</span><span class="marquee-dot">·</span>
+        <span>Kearney, NE</span><span class="marquee-dot">·</span>
+        <span>Video With Intention</span><span class="marquee-dot">·</span>
+        <span>Ayden Schaffnitt Media</span><span class="marquee-dot">·</span>
+      </div>
+      <div class="marquee-content">
+        <span>Sports</span><span class="marquee-dot">·</span>
+        <span>Brands</span><span class="marquee-dot">·</span>
+        <span>Stories</span><span class="marquee-dot">·</span>
+        <span>Kearney, NE</span><span class="marquee-dot">·</span>
+        <span>Video With Intention</span><span class="marquee-dot">·</span>
+        <span>Ayden Schaffnitt Media</span><span class="marquee-dot">·</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================
        ABOUT
   ====================================================== -->
   <section id="about">
@@ -86,7 +120,7 @@
         </div>
 
         <div class="reveal" style="transition-delay:0.1s">
-          <p class="section-label">About</p>
+          <p class="section-label"><span class="section-num">01</span> — About</p>
           <h2 class="section-heading">The person<br/>behind the lens</h2>
           <br/>
           <p class="about-body">
@@ -127,7 +161,7 @@
 
       <div class="portfolio-header reveal">
         <div>
-          <p class="section-label">Portfolio</p>
+          <p class="section-label"><span class="section-num">02</span> — Work</p>
           <h2 class="section-heading">Selected Work</h2>
         </div>
 
@@ -149,7 +183,7 @@
   <section id="contact">
     <div class="container">
       <div class="contact-inner reveal">
-        <p class="section-label">Contact</p>
+        <p class="section-label"><span class="section-num">03</span> — Contact</p>
         <h2 class="section-heading">Let's make something great.</h2>
         <p class="contact-sub">
           Have a project in mind? Whether it's a game-day highlight reel or a brand

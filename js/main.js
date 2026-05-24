@@ -26,6 +26,33 @@ const hamburger = document.getElementById("hamburger");
 const navLinks = document.getElementById("nav-links");
 hamburger.addEventListener("click", () => navLinks.classList.toggle("open"));
 
+// ---------- Hero Entrance Animation ----------
+function animateHero() {
+  const title    = document.querySelector('.hero-title');
+  const hero     = document.querySelector('#hero');
+  const words    = document.querySelectorAll('.word-inner');
+
+  // Stagger each word
+  words.forEach((el, i) => {
+    el.style.transitionDelay = `${0.3 + i * 0.13}s`;
+  });
+
+  // Trigger animations
+  setTimeout(() => {
+    if (title) title.classList.add('animate');
+    if (hero)  hero.classList.add('hero-loaded');
+  }, 80);
+}
+
+// ---------- Hero Parallax ----------
+const heroContent = document.querySelector('.hero-content');
+window.addEventListener('scroll', () => {
+  if (!heroContent || window.scrollY >= window.innerHeight) return;
+  const progress = window.scrollY / window.innerHeight;
+  heroContent.style.transform = `translateY(${window.scrollY * 0.22}px)`;
+  heroContent.style.opacity   = Math.max(0, 1 - progress * 1.6).toFixed(3);
+}, { passive: true });
+
 // ---------- Filter Tabs ----------
 const filterBtns = document.querySelectorAll(".filter-btn");
 filterBtns.forEach((btn) => {
@@ -57,10 +84,12 @@ function renderVideos() {
   }
 
   filtered.forEach((video, i) => {
+    const isFeatured = i === 0;
     const card = document.createElement("div");
-    card.className = "video-card";
-    card.style.animationDelay = `${i * 60}ms`;
-    card.innerHTML = `
+    card.className = isFeatured ? "video-card featured" : "video-card";
+    card.style.animationDelay = `${i * 70}ms`;
+
+    const thumbHTML = `
       <div class="card-thumb" data-id="${video.id}">
         <img
           src="${getYouTubeThumbnail(video.id)}"
@@ -75,12 +104,18 @@ function renderVideos() {
           </svg>
         </div>
       </div>
+    `;
+
+    const infoHTML = `
       <div class="card-info">
+        ${isFeatured ? '<span class="featured-label">Featured Work</span>' : ''}
         <span class="card-tag">${video.category === "sports" ? "Sports" : "Business"}</span>
         <h3 class="card-title">${video.title}</h3>
         <p class="card-desc">${video.description}</p>
       </div>
     `;
+
+    card.innerHTML = thumbHTML + infoHTML;
     card.querySelector(".card-thumb").addEventListener("click", () =>
       openModal(video.id, video.title)
     );
@@ -205,6 +240,7 @@ function initHeroVideos(clips) {
 }
 
 // ---------- Init ----------
+animateHero();
 renderVideos();
 
 // On mobile, use only 3 random clips to save data (already shuffled)

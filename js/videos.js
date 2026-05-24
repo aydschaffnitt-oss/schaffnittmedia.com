@@ -35,6 +35,7 @@ const HERO_VIDEOS = (function () {
     "videos/webreel2_2_9_1.mp4",
     "videos/webreelFIX2_2_8_1.mp4",
     "videos/webreel_12.mp4",
+    "videos/webreel_13_1.mp4",
   ];
   // Shuffle using Fisher-Yates so order is different every visit
   for (let i = clips.length - 1; i > 0; i--) {

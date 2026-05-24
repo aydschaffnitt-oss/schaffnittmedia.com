@@ -469,28 +469,55 @@ section { padding: 100px 0; }
 .marquee-dot { color: var(--accent-dim) !important; }
 
 
-/* ---------- Particle Canvas ---------- */
-#particle-canvas {
-  position: fixed;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 1;
-}
-
+/* ---------- Section Ambient Glow ---------- */
 /*
-  Every visible section gets z-index: 2 so it stacks above the
-  particle canvas (z:1). The nav/modal/grain are already higher.
+  Each content section gets a slow-breathing radial gradient orb
+  via ::before. isolation:isolate + z-index:-1 keeps the glow
+  behind the section's content but above its background fill.
 */
-#hero,
-.marquee-section,
 #about,
 #portfolio,
-#contact,
-footer {
+#contact {
   position: relative;
-  z-index: 2;
+  isolation: isolate;
+}
+
+#about::before,
+#portfolio::before,
+#contact::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Warm light from top-right, faint counter-glow bottom-left */
+#about::before {
+  background:
+    radial-gradient(ellipse 55% 50% at 92% 8%,  rgba(212,197,169,0.09) 0%, transparent 65%),
+    radial-gradient(ellipse 35% 40% at 8%  92%, rgba(212,197,169,0.05) 0%, transparent 60%);
+  animation: glowBreath 22s ease-in-out infinite alternate;
+}
+
+/* Light from the left edge, opposing glow far right */
+#portfolio::before {
+  background:
+    radial-gradient(ellipse 40% 60% at 4%  35%, rgba(212,197,169,0.07) 0%, transparent 62%),
+    radial-gradient(ellipse 38% 42% at 96% 72%, rgba(212,197,169,0.05) 0%, transparent 60%);
+  animation: glowBreath 27s ease-in-out infinite alternate-reverse;
+}
+
+/* Single soft centered orb — suits the minimal contact layout */
+#contact::before {
+  background:
+    radial-gradient(ellipse 65% 60% at 50% 55%, rgba(212,197,169,0.09) 0%, transparent 65%);
+  animation: glowBreath 18s ease-in-out infinite alternate;
+}
+
+@keyframes glowBreath {
+  from { opacity: 0.35; transform: scale(0.94) translate(-1.5%, 1.5%); }
+  to   { opacity: 1;    transform: scale(1.06) translate(1.5%, -1.5%); }
 }
 
 /* ---------- About ---------- */

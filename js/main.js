@@ -239,6 +239,97 @@ function initHeroVideos(clips) {
   preloadSlot(1, 1 % clips.length);
 }
 
+// ---------- Marquee (JS-driven, pixel-perfect loop) ----------
+(function () {
+  const track = document.querySelector('.marquee-track');
+  if (!track) return;
+
+  const SPEED = 52; // px per second — adjust to taste
+  let loopWidth = 0;
+  let x = 0;
+  let last = null;
+
+  function tick(ts) {
+    if (last !== null) {
+      // Cap delta so a background tab resuming doesn't cause a huge jump
+      const dt = Math.min(ts - last, 50);
+      x -= SPEED * (dt / 1000);
+      if (x <= -loopWidth) x += loopWidth;
+      track.style.transform = `translateX(${x}px)`;
+    }
+    last = ts;
+    requestAnimationFrame(tick);
+  }
+
+  // Measure after fonts load so Bebas Neue is fully applied
+  document.fonts.ready.then(() => {
+    const copy = track.querySelector('.marquee-content');
+    loopWidth = copy.getBoundingClientRect().width;
+    if (loopWidth > 0) requestAnimationFrame(tick);
+  });
+})();
+
+// ---------- Floating Particle Canvas ----------
+(function () {
+  const canvas = document.getElementById('particle-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+
+  const COUNT  = 58;
+  const R = 212, G = 197, B = 169; // warm cream
+
+  function resize() {
+    canvas.width  = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize, { passive: true });
+
+  function mkParticle() {
+    const size = 1.2 + Math.random() * 2;
+    return {
+      x:     Math.random() * canvas.width,
+      y:     Math.random() * canvas.height,
+      size,
+      vx:    (Math.random() - 0.5) * 0.22,
+      vy:    (Math.random() - 0.5) * 0.22,
+      alpha: 0.04 + Math.random() * 0.07,
+      angle: Math.random() * Math.PI * 2,
+      spin:  (Math.random() - 0.5) * 0.006,
+    };
+  }
+
+  const particles = Array.from({ length: COUNT }, mkParticle);
+
+  function tick() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    for (const p of particles) {
+      p.x += p.vx;
+      p.y += p.vy;
+      p.angle += p.spin;
+
+      // Wrap around viewport edges
+      if (p.x < -5)               p.x = canvas.width  + 5;
+      if (p.x > canvas.width  + 5) p.x = -5;
+      if (p.y < -5)               p.y = canvas.height + 5;
+      if (p.y > canvas.height + 5) p.y = -5;
+
+      ctx.save();
+      ctx.globalAlpha = p.alpha;
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.angle);
+      ctx.fillStyle = `rgb(${R},${G},${B})`;
+      ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
+      ctx.restore();
+    }
+
+    requestAnimationFrame(tick);
+  }
+
+  tick();
+})();
+
 // ---------- Scroll Progress ----------
 const scrollProgressEl = document.querySelector('.scroll-progress');
 if (scrollProgressEl) {

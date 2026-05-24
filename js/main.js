@@ -244,15 +244,14 @@ function initHeroVideos(clips) {
   const track = document.querySelector('.marquee-track');
   if (!track) return;
 
-  const SPEED = 52; // px per second — adjust to taste
+  const SPEED = 52; // px per second
   let loopWidth = 0;
   let x = 0;
   let last = null;
 
   function tick(ts) {
     if (last !== null) {
-      // Cap delta so a background tab resuming doesn't cause a huge jump
-      const dt = Math.min(ts - last, 50);
+      const dt = Math.min(ts - last, 50); // cap so tab-resume doesn't jump
       x -= SPEED * (dt / 1000);
       if (x <= -loopWidth) x += loopWidth;
       track.style.transform = `translateX(${x}px)`;
@@ -261,11 +260,21 @@ function initHeroVideos(clips) {
     requestAnimationFrame(tick);
   }
 
-  // Measure after fonts load so Bebas Neue is fully applied
   document.fonts.ready.then(() => {
-    const copy = track.querySelector('.marquee-content');
-    loopWidth = copy.getBoundingClientRect().width;
-    if (loopWidth > 0) requestAnimationFrame(tick);
+    const original = track.children[0];
+    // Use offsetWidth (integer px) — avoids sub-pixel drift accumulation
+    loopWidth = original.offsetWidth;
+    if (!loopWidth) return;
+
+    // Clone until the track is at least 3× the screen width wide.
+    // This guarantees the reset seam is always off-screen no matter
+    // how wide the viewport is.
+    const target = window.innerWidth * 3;
+    while (track.offsetWidth < target) {
+      track.appendChild(original.cloneNode(true));
+    }
+
+    requestAnimationFrame(tick);
   });
 })();
 

@@ -18,12 +18,31 @@
 // ============================================================
 //  HERO BACKGROUND VIDEOS
 //  Add your encoded MP4 clips to the /videos/ folder, then
-//  list the filenames here. They will cycle automatically.
-//  e.g. "videos/my-clip.mp4"
+//  list the filenames here. They are randomized on each visit.
+//  Note: keep files under 100MB (GitHub's hard limit)
 // ============================================================
-const HERO_VIDEOS = [
-  "videos/clip1.mp4",   // Replace with your actual filename
-];
+const HERO_VIDEOS = (function () {
+  const clips = [
+    "videos/webreel2_2.mp4",
+    "videos/webreel2_2_1.mp4",
+    "videos/webreel2_2_10.mp4",
+    "videos/webreel2_2_2.mp4",
+    "videos/webreel2_2_3.mp4",
+    "videos/webreel2_2_4.mp4",
+    "videos/webreel2_2_5.mp4",
+    "videos/webreel2_2_6.mp4",
+    "videos/webreel2_2_7.mp4",
+    "videos/webreel2_2_9_1.mp4",
+    "videos/webreelFIX2_2_8_1.mp4",
+    "videos/webreel2_1_1.mp4",
+  ];
+  // Shuffle using Fisher-Yates so order is different every visit
+  for (let i = clips.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [clips[i], clips[j]] = [clips[j], clips[i]];
+  }
+  return clips;
+})();
 
 // How many seconds each video plays before switching (default: 8)
 const HERO_INTERVAL = 8;

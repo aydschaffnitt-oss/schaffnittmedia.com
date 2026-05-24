@@ -262,15 +262,15 @@ function initHeroVideos(clips) {
 
   document.fonts.ready.then(() => {
     const original = track.children[0];
-    // Use offsetWidth (integer px) — avoids sub-pixel drift accumulation
     loopWidth = original.offsetWidth;
     if (!loopWidth) return;
 
-    // Clone until the track is at least 3× the screen width wide.
-    // This guarantees the reset seam is always off-screen no matter
-    // how wide the viewport is.
-    const target = window.innerWidth * 3;
-    while (track.offsetWidth < target) {
+    // Calculate how many copies fill 3× the viewport, then add them.
+    // (Can't use track.offsetWidth in a while-loop — the parent clips
+    //  it to viewport width, causing an infinite loop.)
+    const copiesNeeded = Math.ceil((window.innerWidth * 3) / loopWidth);
+    const existing = track.children.length;
+    for (let i = existing; i < copiesNeeded; i++) {
       track.appendChild(original.cloneNode(true));
     }
 

@@ -69,6 +69,12 @@ function getYouTubeThumbnail(id) {
   return `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
 }
 
+const CATEGORY_LABELS = {
+  sports: "Sports",
+  business: "Business",
+  personal: "Personal",
+};
+
 function renderVideos() {
   const grid = document.getElementById("video-grid");
   const filtered =
@@ -109,7 +115,7 @@ function renderVideos() {
     const infoHTML = `
       <div class="card-info">
         ${isFeatured ? '<span class="featured-label">Featured Work</span>' : ''}
-        <span class="card-tag">${video.category === "sports" ? "Sports" : "Business"}</span>
+        <span class="card-tag">${CATEGORY_LABELS[video.category] || video.category}</span>
         <h3 class="card-title">${video.title}</h3>
         <p class="card-desc">${video.description}</p>
       </div>

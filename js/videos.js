@@ -48,7 +48,7 @@ const HERO_VIDEOS = (function () {
 // How many seconds each video plays before switching (default: 8)
 const HERO_INTERVAL = 8;
 //
-//  CATEGORIES: "sports" or "business"
+//  CATEGORIES: "sports", "business", or "personal"
 //
 // ============================================================
 
@@ -85,5 +85,13 @@ const VIDEOS = [
     title: "Hub Fitness Hype Reel",
     description: "Short reel showing off the incredible atmosphere at Hub Fitness.",
     category: "business",
+  },
+
+  // --- PERSONAL ---
+  {
+    id: "yGuW6uSuSLk",
+    title: "Ed Walker's Diner",
+    description: "Short cinematic piece showcasing the atmosphere at Ed Walker's Diner in Fort Smith, Arkansas.",
+    category: "personal",
   },
 ];

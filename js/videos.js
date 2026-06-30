@@ -80,4 +80,10 @@ const VIDEOS = [
     description: "Short reel showcasing new piece of equipment for Hub Fitness.",
     category: "business",
   },
+  {
+    id: "3B37wJfLwgA",
+    title: "Hub Fitness Hype Reel",
+    description: "Short reel showing off the incredible atmosphere at Hub Fitness.",
+    category: "business",
+  },
 ];
